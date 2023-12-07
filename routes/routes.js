@@ -18,7 +18,7 @@ router.post('/addUser', async (req,res)=>{
             type: 'success',
             message: 'Usuario agregado con exito'
         };
-        res.json({message: 'usuario agregado con exito', user: updatedUser});
+        res.json({message: 'usuario agregado con exito'});
     } catch (err) {
         res.json({message: err.message, type: 'danger'});
     }
@@ -44,7 +44,7 @@ router.get('/editUser/:id', async (req,res)=>{
     try {
         const user = await  User.findById(id);
         if(user==null){
-            res.send('di compota');
+            res.send('Usuario no encontrado');
         }else{
             console.log(user)
         }
@@ -70,7 +70,7 @@ router.post('/updateUser/:id', async(req,res)=>{
             type: 'success',
             message: 'usuario editado con exito',
         }
-        res.json({message: 'usuario editado con exito', user: updatedUser});
+        res.json({message: 'usuario editado con exito'});
     } catch (err) {
         res.json({message: err.message})
     }
@@ -84,7 +84,7 @@ router.get('/deleteUser/:id', async(req,res)=>{
     console.log(idO)
     try {
         await User.findByIdAndDelete(idO)
-        res.json({message: 'usuario eliminado con exito', user: updatedUser});
+        res.json({message: 'usuario eliminado con exito'});
     } catch (err) {
         res.json({message: err.message})
     }
@@ -105,7 +105,7 @@ router.post('/addProduct', async (req,res)=>{
             type: 'success',
             message: 'Producto agregado con exito'
         };
-        res.json({message: 'producto agregado con exito', user: updatedUser});
+        res.json({message: 'producto agregado con exito'});
     } catch (err) {
         res.json({message: err.message, type: 'danger'});
     }
@@ -142,7 +142,7 @@ router.get('/updateProduct/:id', async(req,res)=>{
             type: 'success',
             message: 'Producto editado con exito',
         }
-        res.json({message: 'producto editado con exito', user: updatedUser});
+        res.json({message: 'producto editado con exito'});
     } catch (err) {
         res.json({message: err.message})
     }
@@ -157,7 +157,7 @@ router.get('/deleteProducto/:id', async(req,res)=>{
     console.log(idO)
     try {
         await Product.findByIdAndDelete(idO)
-        res.json({message: 'producto eliminado con exito', user: updatedUser});
+        res.json({message: 'producto eliminado con exito'});
     } catch (err) {
         res.json({message: err.message})
     }

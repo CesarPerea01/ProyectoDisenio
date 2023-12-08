@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const verificarToken = require('../middlewares/token'); 
 const User = require('../models/usuarios');
 const Product = require('../models/productos');
 
 
+
 // insertar algo en la ruta de la BD
-router.post('/addUser', async (req,res)=>{
+router.post('/addUser', verificarToken, async (req,res)=>{
     const user = new User({
         name: req.body.name,
         email: req.body.email,
@@ -25,7 +27,7 @@ router.post('/addUser', async (req,res)=>{
 });
 
 // obtener los usuarios
-router.get('/usuarios', async(req, res)=>{
+router.get('/usuarios', verificarToken, async(req, res)=>{
     try {
         const users = await User.find().exec();
         console.log(users)
@@ -39,23 +41,23 @@ router.get('/usuarios', async(req, res)=>{
 });
 
 //editar un usuario (obtenerlo realmente, como para mostrar los datos por pantalla para editarlos, no se usa)
-router.get('/editUser/:id', async (req,res)=>{
-    let {id}=req.params.id;
-    try {
-        const user = await  User.findById(id);
-        if(user==null){
-            res.send('Usuario no encontrado');
-        }else{
-            console.log(user)
-        }
-    } catch (err) {
-        res.json({message: err.message})
-    }
+// router.get('/editUser/:id', async (req,res)=>{
+//     let {id}=req.params.id;
+//     try {
+//         const user = await  User.findById(id);
+//         if(user==null){
+//             res.send('Usuario no encontrado');
+//         }else{
+//             console.log(user)
+//         }
+//     } catch (err) {
+//         res.json({message: err.message})
+//     }
     
-});
+// });
 
 // actualizar usuarios
-router.post('/updateUser/:id', async(req,res)=>{
+router.put('/updateUser/:id', verificarToken, async(req,res)=>{
     let id = req.params.id;
     const ObjectId = require('mongodb').ObjectId;
     const idO = new ObjectId(id);
@@ -77,7 +79,7 @@ router.post('/updateUser/:id', async(req,res)=>{
 });
 
 // eliminar usuarios
-router.get('/deleteUser/:id', async(req,res)=>{
+router.delete('/deleteUser/:id', verificarToken, async(req,res)=>{
     let id = req.params.id;
     const ObjectId = require('mongodb').ObjectId;
     const idO = new ObjectId(id);
@@ -91,8 +93,7 @@ router.get('/deleteUser/:id', async(req,res)=>{
 });
 
 
-// agregar productos
-router.post('/addProduct', async (req,res)=>{
+router.post('/addProduct', verificarToken, async (req, res) => {
     const product = new Product({
         name: req.body.name,
         description: req.body.description,
@@ -111,8 +112,9 @@ router.post('/addProduct', async (req,res)=>{
     }
 });
 
+
 // obtener productos
-router.get('/productos', async(req,res)=>{
+router.get('/productos', verificarToken, async(req,res)=>{
     try {
         const products = await Product.find().exec();
         console.log(products)
@@ -127,7 +129,7 @@ router.get('/productos', async(req,res)=>{
 
 
 // editar productos
-router.get('/updateProduct/:id', async(req,res)=>{
+router.put('/updateProduct/:id', verificarToken, async(req,res)=>{
     let id = req.params.id;
     const ObjectId = require('mongodb').ObjectId;
     const idO = new ObjectId(id);
@@ -150,7 +152,7 @@ router.get('/updateProduct/:id', async(req,res)=>{
 
 
 // eliminar productos
-router.get('/deleteProducto/:id', async(req,res)=>{
+router.delete('/deleteProducto/:id', verificarToken, async(req,res)=>{
     let id = req.params.id;
     const ObjectId = require('mongodb').ObjectId;
     const idO = new ObjectId(id);
